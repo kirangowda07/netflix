@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "netflix-clone",
   "builds": [
     {
       "src": "server/src/index.js",
@@ -23,10 +22,5 @@
       "src": "/(.*)",
       "dest": "/client/$1"
     }
-  ],
-  "functions": {
-    "server/src/index.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
