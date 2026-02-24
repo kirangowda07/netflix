@@ -11,12 +11,18 @@ export const AuthProvider = ({ children }) => {
     const API_URL = import.meta.env.VITE_API_URL || 
         (import.meta.env.PROD ? '/api/auth' : 'http://localhost:5000/api/auth');
 
+    // Create axios instance with default configuration
+    const api = axios.create({
+        baseURL: API_URL,
+        withCredentials: true
+    });
+
     useEffect(() => {
         const checkAuth = async () => {
             const token = localStorage.getItem('token');
             if (token) {
                 try {
-                    const res = await axios.get(`${API_URL}/me`, {
+                    const res = await api.get('/me', {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                     setUser(res.data);
@@ -32,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (identifier, password) => {
         try {
-            const res = await axios.post(`${API_URL}/login`, {
+            const res = await api.post('/login', {
                 identifier,
                 password,
             });
@@ -47,7 +53,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            await axios.post(`${API_URL}/register`, userData);
+            await api.post('/register', userData);
             return { success: true };
         } catch (error) {
             console.error(error);
@@ -57,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post(`${API_URL}/logout`);
+            await api.post('/logout');
         } catch (e) {
             console.error(e);
         }

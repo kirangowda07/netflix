@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? ['https://netflix-clone.vercel.app', 'https://netflix-clone-kirangowda07.vercel.app']
+        ? true // Allow all origins in production, or set to specific domain
         : 'http://localhost:5173',
     credentials: true
 }));
